@@ -19,11 +19,13 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+// Seeds data into the database
 app.post('/seed-data', async (req, res) => {
   const data = await seedData();
   res.send(data);
 });
 
+// Debug only, gets the raw database data for a student
 app.get('/student', async (req, res) => {
   const { studentId }: { studentId?: string } = req.query;
   if (!studentId) {
@@ -39,6 +41,7 @@ app.get('/student', async (req, res) => {
   }
 });
 
+// Debug only, gets the raw database data for all classes, with students and scores joined in.
 app.get('/classes', async (req, res) => {
   try {
     const results = await getClasses();
@@ -48,6 +51,7 @@ app.get('/classes', async (req, res) => {
   }
 });
 
+// Get test results for one student
 app.get('/student-test-results', async (req, res) => {
   const { studentId }: { studentId?: string } = req.query;
   if (!studentId) {
@@ -63,6 +67,7 @@ app.get('/student-test-results', async (req, res) => {
   }
 });
 
+// Get test results for all students across one teacher
 app.get('/teacher-test-results', async (req, res) => {
   const { teacherId }: { teacherId?: string } = req.query;
   if (!teacherId) {
@@ -78,6 +83,7 @@ app.get('/teacher-test-results', async (req, res) => {
   }
 });
 
+// Get test result stats for all students across one teacher
 app.get('/teacher-test-result-stats', async (req, res) => {
   const { teacherId }: { teacherId?: string } = req.query;
   if (!teacherId) {
@@ -93,6 +99,7 @@ app.get('/teacher-test-result-stats', async (req, res) => {
   }
 });
 
+// Get test result stats for all students across all classes
 app.get('/course-test-result-stats', async (req, res) => {
   try {
     const results = await getCourseTestResultStats();
@@ -102,6 +109,7 @@ app.get('/course-test-result-stats', async (req, res) => {
   }
 });
 
+// Update a single test result. Only examId is required in the body, and can optionally pass studentId, courseName, examType, score, date.
 app.patch('/test-result', async (req, res) => {
   if (!req.body) {
     res.status(400).send('Must provide a body in the request');
@@ -119,6 +127,7 @@ app.patch('/test-result', async (req, res) => {
   }
 });
 
+// Move a list of students to a new class. Required body: studentIds, newClassName.
 app.post('/move-students-to-new-class', async (req, res) => {
   if (!req.body) {
     res.status(400).send('Must provide a body in the request');
