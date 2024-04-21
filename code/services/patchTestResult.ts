@@ -1,7 +1,6 @@
 import { isValidObjectId } from "mongoose";
 import Score from "../models/Score";
 import Student from "../models/Student"
-import { cleanDocument } from "../utils/cleanDocument";
 
 export const patchTestResult = async (dataToUpdate: any) => {
   const { examId } = dataToUpdate;

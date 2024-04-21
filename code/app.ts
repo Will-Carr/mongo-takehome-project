@@ -2,10 +2,13 @@ import express from 'express';
 import mongoose from 'mongoose';
 import config from './config';
 import seedData from './seeder/seedData';
+import { getClasses } from './services/getClasses';
 import { getCourseTestResultStats } from './services/getCourseTestResultStats';
+import { getStudent } from './services/getStudent';
 import { getStudentTestResults } from './services/getStudentTestResults';
 import { getTeacherTestResults } from './services/getTeacherTestResults';
 import { getTeacherTestResultStats } from './services/getTeacherTestResultStats';
+import { moveStudentsToNewClass } from './services/moveStudentsToNewClass';
 import { patchTestResult } from './services/patchTestResult';
 
 const app = express();
@@ -19,6 +22,30 @@ app.get('/', (req, res) => {
 app.post('/seed-data', async (req, res) => {
   const data = await seedData();
   res.send(data);
+});
+
+app.get('/student', async (req, res) => {
+  const { studentId }: { studentId?: string } = req.query;
+  if (!studentId) {
+    res.status(400).send('Must provide a studentId');
+    return;
+  }
+
+  try {
+    const results = await getStudent(studentId);
+    res.send(results);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
+app.get('/classes', async (req, res) => {
+  try {
+    const results = await getClasses();
+    res.send(results);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
 });
 
 app.get('/student-test-results', async (req, res) => {
@@ -86,6 +113,27 @@ app.patch('/test-result', async (req, res) => {
   }
   try {
     const results = await patchTestResult(req.body);
+    res.send(results);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
+app.post('/move-students-to-new-class', async (req, res) => {
+  if (!req.body) {
+    res.status(400).send('Must provide a body in the request');
+    return;
+  }
+  if (!req.body.studentIds) {
+    res.status(400).send('Must provide studentIds in the request body');
+    return;
+  }
+  if (!req.body.newClassName) {
+    res.status(400).send('Must provide newClassName in the request body');
+    return;
+  }
+  try {
+    const results = await moveStudentsToNewClass(req.body.studentIds, req.body.newClassName);
     res.send(results);
   } catch (err) {
     res.status(400).send(err.message);
