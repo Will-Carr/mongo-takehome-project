@@ -1,6 +1,5 @@
 import { isValidObjectId } from "mongoose";
 import Class from "../models/Class";
-import Student from "../models/Student"
 import Teacher from "../models/Teacher";
 import { cleanDocument } from "../utils/cleanDocument";
 

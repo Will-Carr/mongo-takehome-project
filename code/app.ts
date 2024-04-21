@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import config from './config';
 import seedData from './seeder/seedData';
+import { getCourseTestResultStats } from './services/getCourseTestResultStats';
 import { getStudentTestResults } from './services/getStudentTestResults';
 import { getTeacherTestResults } from './services/getTeacherTestResults';
 import { getTeacherTestResultStats } from './services/getTeacherTestResultStats';
@@ -57,6 +58,15 @@ app.get('/teacher-test-result-stats', async (req, res) => {
 
   try {
     const results = await getTeacherTestResultStats(teacherId);
+    res.send(results);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
+app.get('/course-test-result-stats', async (req, res) => {
+  try {
+    const results = await getCourseTestResultStats();
     res.send(results);
   } catch (err) {
     res.status(400).send(err.message);
