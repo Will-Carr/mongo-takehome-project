@@ -6,8 +6,10 @@ import { getCourseTestResultStats } from './services/getCourseTestResultStats';
 import { getStudentTestResults } from './services/getStudentTestResults';
 import { getTeacherTestResults } from './services/getTeacherTestResults';
 import { getTeacherTestResultStats } from './services/getTeacherTestResultStats';
+import { patchTestResult } from './services/patchTestResult';
 
 const app = express();
+app.use(express.json());
 const port = config.port;
 
 app.get('/', (req, res) => {
@@ -67,6 +69,23 @@ app.get('/teacher-test-result-stats', async (req, res) => {
 app.get('/course-test-result-stats', async (req, res) => {
   try {
     const results = await getCourseTestResultStats();
+    res.send(results);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
+app.patch('/test-result', async (req, res) => {
+  if (!req.body) {
+    res.status(400).send('Must provide a body in the request');
+    return;
+  }
+  if (!req.body.examId) {
+    res.status(400).send('Must provide an examId in the request body');
+    return;
+  }
+  try {
+    const results = await patchTestResult(req.body);
     res.send(results);
   } catch (err) {
     res.status(400).send(err.message);
