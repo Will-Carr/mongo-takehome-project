@@ -7,10 +7,7 @@ export const seedClasses = async () => {
     await classDocument.save();
   });
 
-  // TODO - error handling?
   await Promise.allSettled(promises);
-
-  return Class.find();
 };
 
 // export const getSeededData = async () => {

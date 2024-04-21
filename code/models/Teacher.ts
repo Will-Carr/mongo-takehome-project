@@ -6,10 +6,10 @@ const teacherSchema = new mongoose.Schema({
     index: true,
     required: true,
     auto: true,
-  }, // TODO - immutable?
+  },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  classIds: { type: [mongoose.Types.ObjectId], required: true },
+  classId: { type: mongoose.Types.ObjectId, required: true, ref: 'Class' },
 });
 
 const Teacher = mongoose.model("Teacher", teacherSchema);

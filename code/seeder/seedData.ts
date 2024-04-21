@@ -2,6 +2,7 @@ import Class from "../models/Class";
 import Student from "../models/Student";
 import Teacher from "../models/Teacher";
 import { seedClasses } from "./seedClasses"
+import { seedScores } from "./seedScores";
 import { seedStudents } from "./seedStudents";
 import { seedTeachers } from "./seedTeachers";
 
@@ -13,13 +14,25 @@ const seedData = async () => {
   console.log('Deleted Students');
   await Teacher.deleteMany();
   console.log('Deleted Teachers');
-  const classes = await seedClasses();
+  await seedClasses();
   console.log('Seeded Classes');
-  const teachers = await seedTeachers();
+  await seedTeachers();
   console.log('Seeded Teachers');
-  const students = await seedStudents();
+  await seedStudents();
   console.log('Seeded Students');
-  return [...classes, ...teachers, ...students];
+  await seedScores();
+  console.log('Seeded Scores');
+
+  const classes = await Class.find()
+    .populate('teacher')
+    .populate({
+      path: 'students',
+      populate: {
+        path: 'scores',
+      },
+    })
+    .exec();
+  return classes;
 };
 
 export default seedData;

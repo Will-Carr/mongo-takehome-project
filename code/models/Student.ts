@@ -7,11 +7,15 @@ const studentSchema = new mongoose.Schema({
     index: true,
     required: true,
     auto: true,
-  }, // TODO - immutable?
+  },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  classIds: { type: [mongoose.Types.ObjectId], required: true },
-  // scores: { type: [Score], required: true },
+  classId: {
+    type: mongoose.Types.ObjectId,
+    required: true,
+    ref: 'Class',
+  },
+  scores: [{ type: mongoose.Types.ObjectId, default: [], ref: 'Score' }],
 });
 
 const Student = mongoose.model("Student", studentSchema);
