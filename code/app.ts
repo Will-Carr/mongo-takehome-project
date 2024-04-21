@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import config from './config';
 import seedData from './seeder/seedData';
 import { getStudentTestResults } from './services/getStudentTestResults';
+import { getTeacherTestResults } from './services/getTeacherTestResults';
 
 const app = express();
 const port = config.port;
@@ -25,6 +26,21 @@ app.get('/student-test-results', async (req, res) => {
 
   try {
     const results = await getStudentTestResults(studentId);
+    res.send(results);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
+app.get('/teacher-test-results', async (req, res) => {
+  const { teacherId }: { teacherId?: string } = req.query;
+  if (!teacherId) {
+    res.status(400).send('Must provide a teacherId');
+    return;
+  }
+
+  try {
+    const results = await getTeacherTestResults(teacherId);
     res.send(results);
   } catch (err) {
     res.status(400).send(err.message);
