@@ -41,7 +41,7 @@ app.get('/student', async (req, res) => {
   }
 });
 
-// Debug only, gets the raw database data for all classes, with students and scores joined in.
+// Debug only, gets the raw database data for all classes, with teachers, students, and scores joined in.
 app.get('/classes', async (req, res) => {
   try {
     const results = await getClasses();

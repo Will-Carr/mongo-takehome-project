@@ -1,12 +1,11 @@
 import Class from "../models/Class";
-import Teacher from "../models/Teacher";
+import Teacher, { ITeacher } from "../models/Teacher";
 import seedData from './data/teachers.json';
 
 export const seedTeachers = async () => {
   const classes = await Class.find();
-  const promises = seedData.map(async (teacher: any, teacherIndex) => {
-    // todo figure out this typing
-    const classDocument = classes[teacherIndex] as any;
+  const promises = seedData.map(async (teacher: Partial<ITeacher>, teacherIndex) => {
+    const classDocument = classes[teacherIndex];
     teacher.classId = classDocument._id;
     const teacherDocument = new Teacher(teacher);
 

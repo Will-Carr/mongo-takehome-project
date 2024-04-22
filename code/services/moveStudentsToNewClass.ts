@@ -3,7 +3,10 @@ import Class from "../models/Class";
 import Student from "../models/Student"
 
 export const moveStudentsToNewClass = async (studentIds: string, newClassName: string) => {
-  const results: any = {
+  const results: {
+    skippedStudents: string[];
+    successfullyMoved: string[];
+  } = {
     skippedStudents: [],
     successfullyMoved: [],
   }
@@ -13,7 +16,7 @@ export const moveStudentsToNewClass = async (studentIds: string, newClassName: s
       results.skippedStudents.push(studentId);
       continue;
     }
-    const student: any = await Student.findOne({ studentId });
+    const student = await Student.findOne({ studentId });
 
     if (!student) {
       console.log(`Cannot find student ${studentId}`);
@@ -22,14 +25,14 @@ export const moveStudentsToNewClass = async (studentIds: string, newClassName: s
     }
 
     const { classId: currentClassId } = student;
-    const currentClass: any = await Class.findOne({ _id: currentClassId });
+    const currentClass = (await Class.findOne({ _id: currentClassId }))!;
     if (newClassName === currentClass.name) {
       console.log(`Student ${studentId} already belongs to class ${newClassName}`);
       results.skippedStudents.push(studentId);
       continue;
     }
 
-    const newClass: any = await Class.findOne({ name: newClassName });
+    const newClass = await Class.findOne({ name: newClassName });
     if (!newClass) {
       console.log(`Cannot find new class ${newClassName}`);
       results.skippedStudents.push(studentId);

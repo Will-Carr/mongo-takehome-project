@@ -1,5 +1,14 @@
 import mongoose from "mongoose";
 
+export interface IScore {
+  examId: mongoose.Types.ObjectId;
+  studentId: mongoose.Types.ObjectId;
+  courseName: string;
+  examType: 'midterm' | 'final';
+  score: number;
+  date: string;
+}
+
 const scoreSchema = new mongoose.Schema({
   examId: {
     type: mongoose.Types.ObjectId,
@@ -11,9 +20,8 @@ const scoreSchema = new mongoose.Schema({
   courseName: { type: String, required: true },
   examType: { type: String, enum: ['midterm', 'final'], required: true },
   score: { type: Number, min: 0, max: 100, required: true },
-  // todo validator
   date: { type: String, required: true },
 });
 
-const Score = mongoose.model("Score", scoreSchema);
+const Score = mongoose.model<IScore>("Score", scoreSchema);
 export default Score;

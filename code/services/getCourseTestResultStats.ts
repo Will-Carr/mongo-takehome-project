@@ -1,17 +1,24 @@
+import { Document } from "mongoose";
 import Class from "../models/Class";
-import Teacher from "../models/Teacher";
-import { getTeacherTestResults } from "./getTeacherTestResults";
+import { ITeacher } from "../models/Teacher";
 import { getTeacherTestResultStats } from "./getTeacherTestResultStats";
 
 const average = (scores: number[]) => scores.reduce((a, b) => a + b) / scores.length;
+
 export const getCourseTestResultStats = async () => {
-  const classes = await Class.find().populate('teacher');
+  // Get all of our classes
+  const classes = await Class.find().populate<{ teacher: Document<ITeacher> }>('teacher');
+
   const promises = classes.map(async (classDocument: any) => {
     const { name: className, teacher: { teacherId, firstName, lastName }} = classDocument;
+
+    // Get the stats for each student within the class
     const teacherTestResultStats = await getTeacherTestResultStats(teacherId);
+
+    // Get the average score of students for each course in the class
     const studentAveragesByCourse = teacherTestResultStats.reduce((acc, studentStats) => {
       const { stats } = studentStats;
-      Object.entries(stats).forEach(([courseName, courseResults]: any[]) => {
+      Object.entries(stats).forEach(([courseName, courseResults]) => {
         if (!acc[courseName]) {
           acc[courseName] = {
             average: courseResults.average,
@@ -30,10 +37,9 @@ export const getCourseTestResultStats = async () => {
       teacherId,
       teacherFirstName: firstName,
       teacherLastName: lastName,
-      ...studentAveragesByCourse,
+      courses: studentAveragesByCourse,
     };
   });
   const results = await Promise.all(promises);
-  console.log(results)
   return results;
 }

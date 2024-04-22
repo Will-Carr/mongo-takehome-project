@@ -1,5 +1,12 @@
 import mongoose from "mongoose";
 
+export interface ITeacher {
+  teacherId: mongoose.Types.ObjectId;
+  firstName: string;
+  lastName: string;
+  classId: mongoose.Types.ObjectId;
+}
+
 const teacherSchema = new mongoose.Schema({
   teacherId: {
     type: mongoose.Types.ObjectId,
@@ -12,5 +19,5 @@ const teacherSchema = new mongoose.Schema({
   classId: { type: mongoose.Types.ObjectId, required: true, ref: 'Class' },
 });
 
-const Teacher = mongoose.model("Teacher", teacherSchema);
+const Teacher = mongoose.model<ITeacher>("Teacher", teacherSchema);
 export default Teacher;

@@ -1,6 +1,7 @@
 import Class from "../models/Class";
 
 export const getClasses = async () => {
+  // Return all the data we have
   const classes = await Class.find()
     .populate('teacher')
     .populate({
@@ -10,6 +11,5 @@ export const getClasses = async () => {
       },
     })
     .exec();
-  return classes;
   return classes;
 }

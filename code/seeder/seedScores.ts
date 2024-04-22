@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Score from "../models/Score";
 import Student from "../models/Student";
 
@@ -5,10 +6,10 @@ export const seedScores = async () => {
   const students = await Student.find();
   const examTypes = ['midterm', 'final'];
   const examSubjects = ['English', 'Math', 'Science'];
-  const promises = students.map(async (student: any) => {
+  const promises = students.map(async (student) => {
     // 1-6 exams per student
     const numExams = Math.floor(Math.random() * 6) + 1;
-    const examIds: string[] = [];
+    const examIds: mongoose.Types.ObjectId[] = [];
     for (let i = 0; i < numExams; i++) {
       const date = new Date();
       date.setDate(date.getDate() + i - 5);
@@ -21,7 +22,7 @@ export const seedScores = async () => {
       };
 
       const scoreDocument = new Score(exam);
-      examIds.push(scoreDocument._id.toString());
+      examIds.push(scoreDocument._id);
       await scoreDocument.save();
     }
 

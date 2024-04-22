@@ -1,5 +1,12 @@
 import mongoose from "mongoose";
-import Score from "./Score";
+
+export interface IStudent {
+  studentId: mongoose.Types.ObjectId;
+  firstName: string;
+  lastName: string;
+  classId: mongoose.Types.ObjectId;
+  scores: mongoose.Types.ObjectId[];
+}
 
 const studentSchema = new mongoose.Schema({
   studentId: {
@@ -18,5 +25,5 @@ const studentSchema = new mongoose.Schema({
   scores: [{ type: mongoose.Types.ObjectId, default: [], ref: 'Score' }],
 });
 
-const Student = mongoose.model("Student", studentSchema);
+const Student = mongoose.model<IStudent>("Student", studentSchema);
 export default Student;

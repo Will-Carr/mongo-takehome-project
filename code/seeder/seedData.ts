@@ -1,4 +1,5 @@
 import Class from "../models/Class";
+import Score from "../models/Score";
 import Student from "../models/Student";
 import Teacher from "../models/Teacher";
 import { seedClasses } from "./seedClasses"
@@ -8,12 +9,17 @@ import { seedTeachers } from "./seedTeachers";
 
 
 const seedData = async () => {
+  // Purge existing data
   await Class.deleteMany();
   console.log('Deleted Classes');
   await Student.deleteMany();
   console.log('Deleted Students');
   await Teacher.deleteMany();
   console.log('Deleted Teachers');
+  await Score.deleteMany();
+  console.log('Deleted Scores');
+
+  // Seed new data
   await seedClasses();
   console.log('Seeded Classes');
   await seedTeachers();
