@@ -1,9 +1,7 @@
 import { Document } from "mongoose";
-import Class from "../models/Class";
-import { ITeacher } from "../models/Teacher";
+import { Class, ITeacher } from "../models";
+import { average } from "../utils";
 import { getTeacherTestResultStats } from "./getTeacherTestResultStats";
-
-const average = (scores: number[]) => scores.reduce((a, b) => a + b) / scores.length;
 
 export const getCourseTestResultStats = async () => {
   // Get all of our classes

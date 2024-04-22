@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
+import { average } from "../utils";
 import { getTeacherTestResults } from "./getTeacherTestResults";
-
-// todo util
-const average = (scores: number[]) => scores.reduce((a, b) => a + b) / scores.length;
 
 export const getTeacherTestResultStats = async (teacherId: string): Promise<{
   studentId: mongoose.Types.ObjectId;

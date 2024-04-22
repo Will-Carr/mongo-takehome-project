@@ -1,5 +1,5 @@
 import { isValidObjectId } from "mongoose";
-import Student from "../models/Student"
+import { Student } from "../models"
 
 export const getStudent = async (studentId: string) => {
   if (!isValidObjectId(studentId)) {

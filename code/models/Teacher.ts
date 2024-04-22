@@ -19,5 +19,4 @@ const teacherSchema = new mongoose.Schema({
   classId: { type: mongoose.Types.ObjectId, required: true, ref: 'Class' },
 });
 
-const Teacher = mongoose.model<ITeacher>("Teacher", teacherSchema);
-export default Teacher;
+export const Teacher = mongoose.model<ITeacher>("Teacher", teacherSchema);

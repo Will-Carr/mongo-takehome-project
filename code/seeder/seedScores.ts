@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import Score from "../models/Score";
-import Student from "../models/Student";
+import { Score, Student } from "../models";
 
 export const seedScores = async () => {
   const students = await Student.find();

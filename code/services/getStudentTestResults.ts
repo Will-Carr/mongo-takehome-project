@@ -1,7 +1,6 @@
 import { Document, isValidObjectId } from "mongoose";
-import { IScore } from "../models/Score";
-import Student from "../models/Student"
-import { cleanDocument } from "../utils/cleanDocument";
+import { IScore, Student } from "../models";
+import { cleanDocument } from "../utils";
 
 export const getStudentTestResults = async (studentId: string) => {
   if (!isValidObjectId(studentId)) {

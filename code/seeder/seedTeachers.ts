@@ -1,5 +1,4 @@
-import Class from "../models/Class";
-import Teacher, { ITeacher } from "../models/Teacher";
+import { Class, ITeacher, Teacher } from "../models";
 import seedData from './data/teachers.json';
 
 export const seedTeachers = async () => {

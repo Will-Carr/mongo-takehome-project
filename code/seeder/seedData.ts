@@ -1,7 +1,9 @@
-import Class from "../models/Class";
-import Score from "../models/Score";
-import Student from "../models/Student";
-import Teacher from "../models/Teacher";
+import {
+  Class,
+  Score,
+  Student,
+  Teacher,
+} from "../models";
 import { seedClasses } from "./seedClasses"
 import { seedScores } from "./seedScores";
 import { seedStudents } from "./seedStudents";

@@ -1,6 +1,5 @@
 import { Document, isValidObjectId } from "mongoose";
-import Score, { IScore } from "../models/Score";
-import Student from "../models/Student"
+import { IScore, Score, Student } from "../models";
 
 export const patchTestResult = async (dataToUpdate: Partial<IScore>) => {
   const { examId } = dataToUpdate;

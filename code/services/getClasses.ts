@@ -1,4 +1,4 @@
-import Class from "../models/Class";
+import { Class } from "../models";
 
 export const getClasses = async () => {
   // Return all the data we have

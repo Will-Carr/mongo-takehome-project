@@ -1,6 +1,5 @@
 import { isValidObjectId } from "mongoose";
-import Class from "../models/Class";
-import Student from "../models/Student"
+import { Class, Student } from "../models";
 
 export const moveStudentsToNewClass = async (studentIds: string, newClassName: string) => {
   const results: {

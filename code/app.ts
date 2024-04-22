@@ -2,14 +2,16 @@ import express from 'express';
 import mongoose from 'mongoose';
 import config from './config';
 import seedData from './seeder/seedData';
-import { getClasses } from './services/getClasses';
-import { getCourseTestResultStats } from './services/getCourseTestResultStats';
-import { getStudent } from './services/getStudent';
-import { getStudentTestResults } from './services/getStudentTestResults';
-import { getTeacherTestResults } from './services/getTeacherTestResults';
-import { getTeacherTestResultStats } from './services/getTeacherTestResultStats';
-import { moveStudentsToNewClass } from './services/moveStudentsToNewClass';
-import { patchTestResult } from './services/patchTestResult';
+import {
+  getClasses,
+  getCourseTestResultStats,
+  getStudent,
+  getStudentTestResults,
+  getTeacherTestResults,
+  getTeacherTestResultStats,
+  moveStudentsToNewClass,
+  patchTestResult,
+} from './services';
 
 const app = express();
 app.use(express.json());

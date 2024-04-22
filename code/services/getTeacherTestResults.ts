@@ -1,9 +1,11 @@
 import mongoose, { Document, isValidObjectId } from "mongoose";
-import Class from "../models/Class";
-import { IScore } from "../models/Score";
-import { IStudent } from "../models/Student";
-import Teacher from "../models/Teacher";
-import { cleanDocument } from "../utils/cleanDocument";
+import {
+  Class,
+  IScore,
+  IStudent,
+  Teacher,
+} from "../models";
+import { cleanDocument } from "../utils";
 
 export const getTeacherTestResults = async (teacherId: string): Promise<{
   studentId: mongoose.Types.ObjectId;
